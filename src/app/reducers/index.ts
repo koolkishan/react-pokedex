@@ -1,0 +1,1 @@
+export { getInitialPokemonData } from "./getInitialPokemonData";

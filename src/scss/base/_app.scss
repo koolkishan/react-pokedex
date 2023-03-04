@@ -1,0 +1,35 @@
+.main-container {
+  position: relative;
+  max-width: 100vw;
+  overflow: hidden;
+  height: 100vh;
+}
+
+.app {
+  z-index: 1;
+  background: rgba(4, 6, 20, 0.85);
+  box-shadow: 0 8px 32px 0 rgba(6, 8, 28, 0.37);
+  backdrop-filter: blur(50px);
+  -webkit-backdrop-filter: blur(13px);
+  border: 1px solid rgba(23, 20, 20, 0.18);
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template-rows: 10vh auto 10vh;
+  grid-template-columns: 1fr;
+  .content {
+    margin: 0 5rem;
+    border: 0.5px solid rgba(255, 255, 255, 0.203);
+    border-top: none;
+    border-bottom: none;
+    height: 80vh;
+  }
+}
+
+::-webkit-scrollbar {
+  background-color: transparent;
+  width: 0.4rem;
+  &-thumb {
+    background-color: rgba(219, 219, 219, 0.557);
+  }
+}
