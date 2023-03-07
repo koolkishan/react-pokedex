@@ -11,14 +11,30 @@ import axios from "axios";
 function Pokemon() {
   const params = useParams();
   const [pokemonData, setPokemonData] = useState<any>(undefined);
-  const getPokemonInfo = useCallback(async () => {
-    const data = await axios.get(
-      `https://pokeapi.co/api/v2/pokemon/${params.id}`
-    );
-  }, [params.id]);
+  const [isDataLoading, setIsDataLoading] = useState(true);
+  const getPokemonInfo = useCallback(
+    async (image) => {
+      const { data } = await axios.get(
+        `https://pokeapi.co/api/v2/pokemon/${params.id}`
+      );
+
+      const stats = await data.stats.map(({ stat, base_stat }) => ({
+        name: stat.name,
+        value: base_stat,
+      }));
+      console.log({ data });
+      setPokemonData({
+        image,
+        stats,
+        name: data.name,
+        types: data.types.map(({ type: { name } }) => name),
+      });
+      setIsDataLoading(false);
+    },
+    [params.id]
+  );
 
   useEffect(() => {
-    // if (params.id) {
     const imageElemet = document.createElement("img");
     imageElemet.src = images[params.id];
     const options = {
@@ -40,17 +56,18 @@ function Pokemon() {
     if (!image) {
       image = defaultImages[params.id];
     }
-    setPokemonData({
-      image,
-    });
 
-    getPokemonInfo();
+    getPokemonInfo(image);
   }, [params.id, getPokemonInfo]);
 
   return (
     <div>
-      <Info />
-      {pokemonData && <PokemonContainer image={pokemonData.image} />}
+      {!isDataLoading && (
+        <>
+          <Info data={pokemonData} />
+          {pokemonData && <PokemonContainer image={pokemonData.image} />}
+        </>
+      )}
     </div>
   );
 }

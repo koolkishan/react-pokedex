@@ -1,41 +1,31 @@
 import React, { useEffect } from "react";
 
-export default function Info() {
+export default function Info({ data }: any) {
   useEffect(() => {
     const progressBars = document.querySelectorAll("progress");
     progressBars.forEach((progressBar) => {
       progressBar.style.width = "10rem";
     });
   }, []);
+  console.log({ data }, "tata");
   return (
     <>
       <div className="details">
-        <h1 className="name">Bulbasaur</h1>
-        <h3>Type: Grass - Poison</h3>
+        <h1 className="name">{data.name}</h1>
+        <h3>Type: {data.types.join(" - ")}</h3>
         <h3>Evolution: 1</h3>
         <button>See next evolution</button>
       </div>
       <div className="stats">
         <ul>
-          <li>
-            HP: 45
-            <progress max={100} value={45} />
-          </li>
-          <li>
-            Attack: 49 <progress max={100} value={49} />
-          </li>
-          <li>
-            Defense: 45 <progress max={100} value={45} />
-          </li>
-          <li>
-            Speed: 45 <progress max={100} value={45} />
-          </li>
-          <li>
-            Special Defense: 65 <progress max={100} value={65} />
-          </li>
-          <li>
-            Special Attack: 65 <progress max={100} value={65} />
-          </li>
+          {data.stats.map((stat: any) => {
+            return (
+              <li>
+                {stat.name}: {stat.value}
+                <progress max={100} value={stat.value} />
+              </li>
+            );
+          })}
         </ul>
       </div>
       <div className="battle-stats">
