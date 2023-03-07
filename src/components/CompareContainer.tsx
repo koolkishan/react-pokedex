@@ -96,8 +96,14 @@ function CompareContainer({
       {pokemon && (
         <div className="compare-element" key={pokemon.id}>
           <div className="compare-info">
-            <h3>{pokemon.name}</h3>
-            <img src={pokemon.image} alt="pokemon" className="compare-image" />
+            <div className="compare-details">
+              <h3>{pokemon.name}</h3>
+              <img
+                src={pokemon.image}
+                alt="pokemon"
+                className="compare-image"
+              />
+            </div>
             <div className="pokemon-types-container">
               <div className="pokemon-types">
                 <h4 className="pokemon-type-title">Type</h4>
