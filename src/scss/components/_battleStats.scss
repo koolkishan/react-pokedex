@@ -4,8 +4,12 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    // font-size: 0.9rem;
     letter-spacing: 0.1rem;
+    li {
+      display: grid;
+      grid-template-columns: max-content 80%;
+      gap: 0.5rem;
+    }
   }
   position: absolute;
   bottom: 3rem;
@@ -13,7 +17,6 @@
   color: white;
   padding: 1rem;
   width: 30rem;
-  //   text-transform: uppercase;
   &::before {
     height: 0.3rem;
     width: 9rem;

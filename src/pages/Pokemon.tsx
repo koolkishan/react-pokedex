@@ -22,7 +22,6 @@ function Pokemon() {
         name: stat.name,
         value: base_stat,
       }));
-      console.log({ data });
       setPokemonData({
         image,
         stats,

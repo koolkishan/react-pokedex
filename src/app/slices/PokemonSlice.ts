@@ -31,7 +31,6 @@ export const PokemonSlice = createSlice({
         (pokemon: any) => pokemon.id === action.payload.id
       );
       const queue = [...state.compareQueue];
-      console.log(index, [...state.compareQueue], action.payload.id);
       queue.splice(index, 1);
       state.compareQueue = queue;
     },
