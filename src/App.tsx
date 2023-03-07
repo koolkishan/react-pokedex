@@ -31,7 +31,7 @@ export default function App() {
   }, [dispatch]);
   const toastOptions: any = {
     position: "bottom-right",
-    autoClose: 8000,
+    autoClose: 2000,
     pauseOnHover: true,
     draggable: true,
     theme: "dark",

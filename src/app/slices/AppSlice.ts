@@ -13,7 +13,10 @@ export const AppSlice = createSlice({
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
     },
-    setUserStatus: (state, action: PayloadAction<{ email: string }>) => {
+    setUserStatus: (
+      state,
+      action: PayloadAction<{ email: string } | undefined>
+    ) => {
       state.userInfo = action.payload;
     },
     setToast: (state, action: PayloadAction<string>) => {
