@@ -14,6 +14,9 @@
     color: white;
     font-size: 1.3rem;
     padding-left: 1rem;
+    &::-webkit-input-placeholder {
+      color: rgba(255, 255, 255, 0.779);
+    }
   }
 }
 .pokemon-card-grid-container {
@@ -27,7 +30,6 @@
   gap: 4rem;
   margin: 4rem;
   margin-top: 2rem;
-  // margin-bottom: 0;
   .pokemon-card {
     width: 250px;
     display: flex;

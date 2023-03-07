@@ -3,7 +3,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Wrapper from "../sections/Wrapper";
 import { debounce } from "../utils";
-import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { getInitialPokemonData } from "../app/reducers";
 import { getPokemonsData } from "../app/reducers/getPokemonsData";
@@ -13,7 +12,6 @@ import { setLoading } from "../app/slices/AppSlice";
 import PokemonCardGrid from "../components/PokemonCardGrid";
 
 function Search() {
-  const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
   const handleChange = debounce((value: any) => getPokemon(value), 300);
   const isLoading = useAppSelector(({ app: { isLoading } }) => isLoading);
@@ -32,7 +30,7 @@ function Search() {
       const clonedPokemons = [...allPokemon];
       const randomPokemonsId = clonedPokemons
         .sort(() => Math.random() - Math.random())
-        .slice(0, 100);
+        .slice(0, 20);
       dispatch(getPokemonsData(randomPokemonsId));
     }
   }, [allPokemon, dispatch]);
@@ -44,14 +42,19 @@ function Search() {
   }, [randomPokemons, dispatch]);
 
   const getPokemon = async (value: any) => {
-    setSearchValue(value);
-    const pokemons = allPokemon.filter((pokemon) =>
-      pokemon.name.includes(value)
-    );
-
-    dispatch(getPokemonsData(pokemons));
-    // }
-    // console.log({ pokemon });
+    if (value.length) {
+      setSearchValue(value.toLowerCase());
+      const pokemons = allPokemon.filter((pokemon) =>
+        pokemon.name.includes(value.toLowerCase())
+      );
+      dispatch(getPokemonsData(pokemons));
+    } else {
+      const clonedPokemons = [...allPokemon];
+      const randomPokemonsId = clonedPokemons
+        .sort(() => Math.random() - Math.random())
+        .slice(0, 20);
+      dispatch(getPokemonsData(randomPokemonsId));
+    }
   };
 
   return (
