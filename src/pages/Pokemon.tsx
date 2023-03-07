@@ -5,7 +5,7 @@ import Info from "../components/Info";
 import PokemonContainer from "../components/PokemonContainer";
 import Wrapper from "../sections/Wrapper";
 import { useParams } from "react-router-dom";
-import { images } from "../utils";
+import { defaultImages, images } from "../utils";
 import { extractColors } from "extract-colors";
 import axios from "axios";
 function Pokemon() {
@@ -36,9 +36,12 @@ function Pokemon() {
       root.style.setProperty("--accent-color", color[0].hex.split('"')[0]);
     };
     getColor();
-
+    let image = images[params.id];
+    if (!image) {
+      image = defaultImages[params.id];
+    }
     setPokemonData({
-      image: images[params.id],
+      image,
     });
 
     getPokemonInfo();
