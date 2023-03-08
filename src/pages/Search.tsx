@@ -1,10 +1,10 @@
 // @ts-nocheck
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Wrapper from "../sections/Wrapper";
 import { debounce } from "../utils";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { getInitialPokemonData } from "../app/reducers";
+import { getInitialPokemonData } from "../app/reducers/getInitialPokemonData";
 import { getPokemonsData } from "../app/reducers/getPokemonsData";
 import Loader from "../components/Loader";
 import { setLoading } from "../app/slices/AppSlice";
@@ -12,7 +12,6 @@ import { setLoading } from "../app/slices/AppSlice";
 import PokemonCardGrid from "../components/PokemonCardGrid";
 
 function Search() {
-  const [searchValue, setSearchValue] = useState("");
   const handleChange = debounce((value: any) => getPokemon(value), 300);
   const isLoading = useAppSelector(({ app: { isLoading } }) => isLoading);
 
@@ -43,7 +42,6 @@ function Search() {
 
   const getPokemon = async (value: any) => {
     if (value.length) {
-      setSearchValue(value.toLowerCase());
       const pokemons = allPokemon.filter((pokemon) =>
         pokemon.name.includes(value.toLowerCase())
       );

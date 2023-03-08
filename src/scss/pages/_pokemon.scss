@@ -1,9 +1,6 @@
 .circle-container {
   display: flex;
   margin-top: 3rem;
-  //   background-color: red;
-  //   justify-content: center;
-  //   align-items: center;
   .outer-circle {
     display: flex;
     justify-content: center;
@@ -34,11 +31,9 @@
     gap: 3rem;
     position: absolute;
     .line {
-      //   position: absolute;
       height: 28rem;
       width: 0.3rem;
       background-color: var(--accent-color);
-
       transform: rotate(45deg);
     }
   }
