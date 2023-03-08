@@ -5,6 +5,7 @@ import { signOut } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebaseConfig";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { setPokemonTab, setToast, setUserStatus } from "../app/slices/AppSlice";
+import { pokemonTabs } from "../utils/constants";
 
 export default function Footer() {
   const location = useLocation();
@@ -19,19 +20,19 @@ export default function Footer() {
   };
   const routes = [
     {
-      name: "description",
+      name: pokemonTabs.description,
       value: "Description",
     },
     {
-      name: "evolution",
+      name: pokemonTabs.evolution,
       value: "Evolution",
     },
     {
-      name: "locations",
+      name: pokemonTabs.locations,
       value: "Catching",
     },
     {
-      name: "moves",
+      name: pokemonTabs.moves,
       value: "Capable Moves",
     },
   ];

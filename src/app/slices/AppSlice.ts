@@ -1,10 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { pokemonTabs } from "../../utils/constants";
 
 const initialState: any = {
   isLoading: true,
   userInfo: undefined,
   toasts: [],
-  currentPokemonTab: "description",
+  currentPokemonTab: pokemonTabs.description,
 };
 
 export const AppSlice = createSlice({

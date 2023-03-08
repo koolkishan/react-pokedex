@@ -14,6 +14,12 @@ import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { setCurrentPokemon } from "../app/slices/PokemonSlice";
 import { setPokemonTab } from "../app/slices/AppSlice";
 import Loader from "../components/Loader";
+import {
+  pokemonRoute,
+  pokemonSpeciesRoute,
+  pokemonTabs,
+} from "../utils/constants";
+
 function Pokemon() {
   const params = useParams();
   const dispatch = useAppDispatch();
@@ -25,7 +31,7 @@ function Pokemon() {
   );
 
   useEffect(() => {
-    dispatch(setPokemonTab("description"));
+    dispatch(setPokemonTab(pokemonTabs.description));
   }, [dispatch]);
 
   const getRecursiveEvolution = (evolutionChain, level, evolutionData) => {
@@ -61,9 +67,7 @@ function Pokemon() {
   const [isDataLoading, setIsDataLoading] = useState(true);
   const getPokemonInfo = useCallback(
     async (image) => {
-      const { data } = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon/${params.id}`
-      );
+      const { data } = await axios.get(`${pokemonRoute}/${params.id}`);
       const { data: dataEncounters } = await axios.get(
         data.location_area_encounters
       );
@@ -72,9 +76,7 @@ function Pokemon() {
         data: {
           evolution_chain: { url: evolutionURL },
         },
-      } = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon-species/${data.id}`
-      );
+      } = await axios.get(`${pokemonSpeciesRoute}/${data.id}`);
       const { data: evolutionData } = await axios.get(evolutionURL);
 
       const pokemonAbilities = {
@@ -145,10 +147,10 @@ function Pokemon() {
     <>
       {!isDataLoading && currentPokemon ? (
         <>
-          {currentPokemonTab === "description" && <Description />}
-          {currentPokemonTab === "evolution" && <Evolution />}
-          {currentPokemonTab === "locations" && <Locations />}
-          {currentPokemonTab === "moves" && <CapableMoves />}
+          {currentPokemonTab === pokemonTabs.description && <Description />}
+          {currentPokemonTab === pokemonTabs.evolution && <Evolution />}
+          {currentPokemonTab === pokemonTabs.locations && <Locations />}
+          {currentPokemonTab === pokemonTabs.moves && <CapableMoves />}
         </>
       ) : (
         <Loader />

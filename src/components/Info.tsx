@@ -3,6 +3,7 @@ import { pokemonTypes } from "../utils";
 import { useAppDispatch } from "../app/hooks";
 import { addPokemonToList } from "../app/reducers/addPokemonToList";
 import { setPokemonTab } from "../app/slices/AppSlice";
+import { pokemonTabs } from "../utils/constants";
 
 export default function Info({ data }: any) {
   const dispatch = useAppDispatch();
@@ -30,7 +31,7 @@ export default function Info({ data }: any) {
         <h1 className="name">{data.name}</h1>
         <h3>Type: {data.types.join(" - ")}</h3>
         <h3>Evolution: {data.evolutionLevel}</h3>
-        <button onClick={() => dispatch(setPokemonTab("evolution"))}>
+        <button onClick={() => dispatch(setPokemonTab(pokemonTabs.evolution))}>
           See next evolution
         </button>
       </div>
