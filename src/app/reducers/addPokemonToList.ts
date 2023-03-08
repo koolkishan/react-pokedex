@@ -9,19 +9,29 @@ export const addPokemonToList = createAsyncThunk(
   async (pokemon: any, { getState, dispatch }) => {
     try {
       const {
-        app: {
-          userInfo: { email },
-        },
+        app: { userInfo },
         pokemon: { userPokemons },
       }: any = getState();
-
+      if (!userInfo?.email) {
+        return dispatch(
+          setToast("Please login in order to add pokemon to your collection.")
+        );
+      }
       const index = userPokemons.findIndex((userPokemon: any, index: any) => {
         return userPokemon.name === pokemon.name;
       });
       if (index === -1) {
+        let types: any = [];
+        if (!pokemon.stats) {
+          pokemon.types.forEach((type: any) =>
+            types.push(Object.keys(type).toString())
+          );
+        } else {
+          types = pokemon.types;
+        }
         await addDoc(pokemonListRef, {
-          pokemon,
-          email,
+          pokemon: { id: pokemon.id, name: pokemon.name, types },
+          email: userInfo.email,
         });
         await dispatch(getUserPokemons());
         dispatch(setToast(`${pokemon.name} added to your collection.`));

@@ -29,7 +29,7 @@
   .name {
     margin-bottom: 1rem;
   }
-  button {
+  .add-pokemon {
     position: absolute;
     right: -1rem;
     bottom: -2rem;
@@ -41,6 +41,11 @@
     text-transform: uppercase;
     font-weight: 700;
     letter-spacing: 0.1rem;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    &:hover {
+      background-color: var(--accent-color);
+    }
   }
   background: linear-gradient(
         $bg-color ($dot-space - $dot-size),

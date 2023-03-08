@@ -17,12 +17,12 @@ function Pokemon() {
       const { data } = await axios.get(
         `https://pokeapi.co/api/v2/pokemon/${params.id}`
       );
-
       const stats = await data.stats.map(({ stat, base_stat }) => ({
         name: stat.name,
         value: base_stat,
       }));
       setPokemonData({
+        id: data.id,
         image,
         stats,
         name: data.name,

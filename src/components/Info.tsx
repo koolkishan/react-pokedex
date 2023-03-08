@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
 import { pokemonTypes } from "../utils";
+import { useAppDispatch } from "../app/hooks";
+import { addPokemonToList } from "../app/reducers/addPokemonToList";
 
 export default function Info({ data }: any) {
+  const dispatch = useAppDispatch();
   useEffect(() => {
     const progressBars = document.querySelectorAll("progress");
     progressBars.forEach((progressBar) => {
@@ -65,7 +68,12 @@ export default function Info({ data }: any) {
             </li>
           </ul>
         }
-        <button>Add Pokemon</button>
+        <button
+          onClick={() => dispatch(addPokemonToList(data))}
+          className="add-pokemon"
+        >
+          Add Pokemon
+        </button>
       </div>
     </>
   );
