@@ -4,6 +4,7 @@ const initialState: any = {
   isLoading: true,
   userInfo: undefined,
   toasts: [],
+  currentPokemonTab: "description",
 };
 
 export const AppSlice = createSlice({
@@ -27,9 +28,17 @@ export const AppSlice = createSlice({
     clearToasts: (state) => {
       state.toasts = [];
     },
+    setPokemonTab: (state, action) => {
+      state.currentPokemonTab = action.payload;
+    },
   },
   extraReducers: (builder) => {},
 });
 
-export const { setLoading, setUserStatus, setToast, clearToasts } =
-  AppSlice.actions;
+export const {
+  setLoading,
+  setUserStatus,
+  setToast,
+  clearToasts,
+  setPokemonTab,
+} = AppSlice.actions;
