@@ -33,7 +33,6 @@ export const AppSlice = createSlice({
       state.currentPokemonTab = action.payload;
     },
   },
-  extraReducers: (builder) => {},
 });
 
 export const {

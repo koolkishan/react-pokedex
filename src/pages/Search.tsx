@@ -12,7 +12,7 @@ import { setLoading } from "../app/slices/AppSlice";
 import PokemonCardGrid from "../components/PokemonCardGrid";
 
 function Search() {
-  const handleChange = debounce((value: any) => getPokemon(value), 300);
+  const handleChange = debounce((value: string) => getPokemon(value), 300);
   const isLoading = useAppSelector(({ app: { isLoading } }) => isLoading);
 
   const dispatch = useAppDispatch();
@@ -40,7 +40,7 @@ function Search() {
     }
   }, [randomPokemons, dispatch]);
 
-  const getPokemon = async (value: any) => {
+  const getPokemon = async (value: string) => {
     if (value.length) {
       const pokemons = allPokemon.filter((pokemon) =>
         pokemon.name.includes(value.toLowerCase())

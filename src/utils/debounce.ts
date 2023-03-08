@@ -1,5 +1,5 @@
-export const debounce = (fn: any, timeout: any) => {
-  let timer: any;
+export const debounce = (fn: Function, timeout: number) => {
+  let timer: ReturnType<typeof setTimeout>;
   return (...args: any) => {
     clearTimeout(timer);
     timer = setTimeout(() => {

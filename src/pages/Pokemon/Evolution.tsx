@@ -13,6 +13,7 @@ function Evolution() {
       const pokemons = pokemonData.currentPokemon.evolution.map(
         ({ pokemon }: any) => pokemon
       );
+
       await dispatch(getPokemonsData(pokemons));
       setIsLoaded(true);
     };

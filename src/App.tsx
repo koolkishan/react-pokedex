@@ -9,7 +9,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { firebaseAuth } from "./utils/firebaseConfig";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
 import { clearToasts, setUserStatus } from "./app/slices/AppSlice";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer, ToastOptions, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "./components/Loader";
 
@@ -29,21 +29,21 @@ export default function App() {
       }
     });
   }, [dispatch]);
-  const toastOptions: any = {
-    position: "bottom-right",
-    autoClose: 2000,
-    pauseOnHover: true,
-    draggable: true,
-    theme: "dark",
-  };
   useEffect(() => {
     if (toasts.length) {
+      const toastOptions: ToastOptions = {
+        position: "bottom-right",
+        autoClose: 2000,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+      };
       toasts.forEach((message: string) => {
         toast(message, toastOptions);
       });
       dispatch(clearToasts());
     }
-  }, [toasts]);
+  }, [toasts, dispatch]);
 
   return (
     <div className="main-container">
