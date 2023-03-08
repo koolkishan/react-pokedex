@@ -38,6 +38,9 @@ export const PokemonSlice = createSlice({
     setCurrentPokemon: (state, action) => {
       state.currentPokemon = action.payload;
     },
+    resetRandomPokemons: (state) => {
+      state.randomPokemons = undefined;
+    },
   },
 
   extraReducers: (builder) => {
@@ -61,5 +64,9 @@ export const PokemonSlice = createSlice({
   },
 });
 
-export const { addToCompare, removeFromCompare, setCurrentPokemon } =
-  PokemonSlice.actions;
+export const {
+  addToCompare,
+  removeFromCompare,
+  setCurrentPokemon,
+  resetRandomPokemons,
+} = PokemonSlice.actions;

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { pokemonTypes } from "../utils";
 import { useAppDispatch } from "../app/hooks";
 import { addPokemonToList } from "../app/reducers/addPokemonToList";
+import { setPokemonTab } from "../app/slices/AppSlice";
 
 export default function Info({ data }: any) {
   const dispatch = useAppDispatch();
@@ -29,7 +30,9 @@ export default function Info({ data }: any) {
         <h1 className="name">{data.name}</h1>
         <h3>Type: {data.types.join(" - ")}</h3>
         <h3>Evolution: {data.evolutionLevel}</h3>
-        <button>See next evolution</button>
+        <button onClick={() => dispatch(setPokemonTab("evolution"))}>
+          See next evolution
+        </button>
       </div>
       <div className="stats">
         <ul>

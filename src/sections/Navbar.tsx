@@ -2,8 +2,11 @@ import React, { useEffect } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import pokeballIcon from "../assets/pokeball-icon.png";
 import { Link, useLocation } from "react-router-dom";
+import { resetRandomPokemons } from "../app/slices/PokemonSlice";
+import { useAppDispatch } from "../app/hooks";
 export default function Navbar() {
   const location = useLocation();
+  const dispatch = useAppDispatch();
   useEffect(() => {
     const index = navigationRoutes.findIndex(({ route }) =>
       location.pathname.includes(route)
@@ -51,7 +54,11 @@ export default function Navbar() {
           <div className="underline"></div>
           {navigationRoutes.map(({ name, route }, index) => {
             return (
-              <Link to={route} key={index}>
+              <Link
+                to={route}
+                key={index}
+                onClick={(e) => dispatch(resetRandomPokemons())}
+              >
                 <li>{name}</li>
               </Link>
             );

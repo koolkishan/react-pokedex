@@ -1,11 +1,11 @@
 import React from "react";
 import { IoGitCompare } from "react-icons/io5";
 import { FaTrash, FaPlus } from "react-icons/fa";
-import { addToCompare } from "../app/slices/PokemonSlice";
+import { addToCompare, setCurrentPokemon } from "../app/slices/PokemonSlice";
 import { useAppDispatch } from "../app/hooks";
 import { removePokemonFromUserList } from "../app/reducers/removePokemonFromUserList";
 import { useLocation, useNavigate } from "react-router-dom";
-import { setToast } from "../app/slices/AppSlice";
+import { setPokemonTab, setToast } from "../app/slices/AppSlice";
 import { addPokemonToList } from "../app/reducers/addPokemonToList";
 function PokemonCardGrid({ pokemons }: any) {
   const dispatch = useAppDispatch();
@@ -20,7 +20,12 @@ function PokemonCardGrid({ pokemons }: any) {
             return (
               <div key={data.id} className="pokemon-card">
                 <div className="pokemon-card-list">
-                  {location.pathname.includes("/search") ? (
+                  {location.pathname.includes("/pokemon") ? (
+                    <FaPlus
+                      className="plus"
+                      onClick={() => dispatch(addPokemonToList(data))}
+                    />
+                  ) : location.pathname.includes("/search") ? (
                     <FaPlus
                       className="plus"
                       onClick={() => dispatch(addPokemonToList(data))}
@@ -55,7 +60,11 @@ function PokemonCardGrid({ pokemons }: any) {
                   alt=""
                   className="pokemon-card-image"
                   loading="lazy"
-                  onClick={() => navigate(`/pokemon/${data.id}`)}
+                  onClick={() => {
+                    dispatch(setPokemonTab("description"));
+                    dispatch(setCurrentPokemon(undefined));
+                    navigate(`/pokemon/${data.id}`);
+                  }}
                 />
                 <div className="pokemon-card-types">
                   {data.types.map((type: any, index: number) => {

@@ -13,21 +13,38 @@ import Description from "./Pokemon/Description";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { setCurrentPokemon } from "../app/slices/PokemonSlice";
 import { setPokemonTab } from "../app/slices/AppSlice";
+import Loader from "../components/Loader";
 function Pokemon() {
   const params = useParams();
   const dispatch = useAppDispatch();
   const currentPokemonTab = useAppSelector(
     ({ app: { currentPokemonTab } }) => currentPokemonTab
   );
+  const currentPokemon = useAppSelector(
+    ({ pokemon: { currentPokemon } }) => currentPokemon
+  );
+
   useEffect(() => {
     dispatch(setPokemonTab("description"));
   }, [dispatch]);
 
   const getRecursiveEvolution = (evolutionChain, level, evolutionData) => {
     if (!evolutionChain.evolves_to.length) {
-      return evolutionData.push({ pokemon: evolutionChain.species, level });
+      return evolutionData.push({
+        pokemon: {
+          ...evolutionChain.species,
+          url: evolutionChain.species.url.replace("pokemon-species", "pokemon"),
+        },
+        level,
+      });
     }
-    evolutionData.push({ pokemon: evolutionChain.species, level });
+    evolutionData.push({
+      pokemon: {
+        ...evolutionChain.species,
+        url: evolutionChain.species.url.replace("pokemon-species", "pokemon"),
+      },
+      level,
+    });
     return getRecursiveEvolution(
       evolutionChain.evolves_to[0],
       level + 1,
@@ -90,7 +107,7 @@ function Pokemon() {
       );
       setIsDataLoading(false);
     },
-    [params.id]
+    [params.id, currentPokemonTab]
   );
 
   useEffect(() => {
@@ -120,16 +137,18 @@ function Pokemon() {
   }, [params.id, getPokemonInfo]);
 
   return (
-    <div>
-      {!isDataLoading && (
+    <>
+      {!isDataLoading && currentPokemon ? (
         <>
           {currentPokemonTab === "description" && <Description />}
           {currentPokemonTab === "evolution" && <Evolution />}
           {currentPokemonTab === "locations" && <Locations />}
           {currentPokemonTab === "moves" && <CapableMoves />}
         </>
+      ) : (
+        <Loader />
       )}
-    </div>
+    </>
   );
 }
 
