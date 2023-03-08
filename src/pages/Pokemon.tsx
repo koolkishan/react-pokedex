@@ -23,6 +23,24 @@ function Pokemon() {
     dispatch(setPokemonTab("description"));
   }, [dispatch]);
 
+  const getRecursiveEvolution = (evolutionChain, level, evolutionData) => {
+    if (!evolutionChain.evolves_to.length) {
+      return evolutionData.push({ pokemon: evolutionChain.species, level });
+    }
+    evolutionData.push({ pokemon: evolutionChain.species, level });
+    return getRecursiveEvolution(
+      evolutionChain.evolves_to[0],
+      level + 1,
+      evolutionData
+    );
+  };
+
+  const getEvolutionData = (evolutionChain) => {
+    const evolutionData = [];
+    getRecursiveEvolution(evolutionChain, 1, evolutionData);
+    return evolutionData;
+  };
+
   const [isDataLoading, setIsDataLoading] = useState(true);
   const getPokemonInfo = useCallback(
     async (image) => {
@@ -33,17 +51,27 @@ function Pokemon() {
         data.location_area_encounters
       );
       // const { data: dataMoves } = await axios.get(data.capableMoves);
+      const {
+        data: {
+          evolution_chain: { url: evolutionURL },
+        },
+      } = await axios.get(
+        `https://pokeapi.co/api/v2/pokemon-species/${data.id}`
+      );
+      const { data: evolutionData } = await axios.get(evolutionURL);
+
       const moves = [];
       const encounters = [];
-      let evolutionLevel = 0;
-      const evolution = [];
+      const evolution = getEvolutionData(evolutionData.chain);
+      let evolutionLevel;
+      evolutionLevel = evolution.find(
+        ({ pokemon }) => pokemon.name === data.name
+      ).level;
       dataEncounters.forEach((encounter) => {
-        console.log(encounter);
         encounters.push(
           encounter.location_area.name.toUpperCase().split("-").join(" ")
         );
       });
-      console.log({ encounters });
       const stats = await data.stats.map(({ stat, base_stat }) => ({
         name: stat.name,
         value: base_stat,

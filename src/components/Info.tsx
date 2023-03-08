@@ -28,14 +28,14 @@ export default function Info({ data }: any) {
       <div className="details">
         <h1 className="name">{data.name}</h1>
         <h3>Type: {data.types.join(" - ")}</h3>
-        <h3>Evolution: 1</h3>
+        <h3>Evolution: {data.evolutionLevel}</h3>
         <button>See next evolution</button>
       </div>
       <div className="stats">
         <ul>
           {data.stats.map((stat: any) => {
             return (
-              <li>
+              <li key={stat.name}>
                 {stat.name}: {stat.value}
                 <progress max={100} value={stat.value} />
               </li>
