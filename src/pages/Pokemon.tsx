@@ -67,7 +67,7 @@ function Pokemon() {
       const { data: dataEncounters } = await axios.get(
         data.location_area_encounters
       );
-      // const { data: dataMoves } = await axios.get(data.capableMoves);
+
       const {
         data: {
           evolution_chain: { url: evolutionURL },
@@ -77,7 +77,11 @@ function Pokemon() {
       );
       const { data: evolutionData } = await axios.get(evolutionURL);
 
-      const moves = [];
+      const pokemonAbilities = {
+        abilities: data.abilities.map(({ ability }) => ability.name),
+        moves: data.moves.map(({ move }) => move.name),
+      };
+
       const encounters = [];
       const evolution = getEvolutionData(evolutionData.chain);
       let evolutionLevel;
@@ -103,6 +107,7 @@ function Pokemon() {
           encounters,
           evolutionLevel,
           evolution,
+          pokemonAbilities,
         })
       );
       setIsDataLoading(false);
