@@ -1,8 +1,6 @@
 // @ts-nocheck
 
 import { useCallback, useEffect, useState } from "react";
-import Info from "../components/Info";
-import PokemonContainer from "../components/PokemonContainer";
 import Wrapper from "../sections/Wrapper";
 import { useParams } from "react-router-dom";
 import { defaultImages, images } from "../utils";
@@ -14,13 +12,17 @@ import CapableMoves from "./Pokemon/CapableMoves";
 import Description from "./Pokemon/Description";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { setCurrentPokemon } from "../app/slices/PokemonSlice";
+import { setPokemonTab } from "../app/slices/AppSlice";
 function Pokemon() {
   const params = useParams();
   const dispatch = useAppDispatch();
   const currentPokemonTab = useAppSelector(
     ({ app: { currentPokemonTab } }) => currentPokemonTab
   );
-  const [pokemonData, setPokemonData] = useState<any>(undefined);
+  useEffect(() => {
+    dispatch(setPokemonTab("description"));
+  }, [dispatch]);
+
   const [isDataLoading, setIsDataLoading] = useState(true);
   const getPokemonInfo = useCallback(
     async (image) => {
