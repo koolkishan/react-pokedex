@@ -8,7 +8,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { setPokemonTab, setToast } from "../app/slices/AppSlice";
 import { addPokemonToList } from "../app/reducers/addPokemonToList";
 import { pokemonTabs } from "../utils/constants";
-function PokemonCardGrid({ pokemons }: any) {
+import { pokemonTypeInterface, userPokemonsType } from "../utils/types";
+function PokemonCardGrid({ pokemons }: { pokemons: userPokemonsType[] }) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -16,8 +17,8 @@ function PokemonCardGrid({ pokemons }: any) {
     <div className="pokemon-card-grid-container">
       <div className="pokemon-card-grid">
         {pokemons &&
-          pokemons.length &&
-          pokemons?.map((data: any) => {
+          pokemons.length > 0 &&
+          pokemons?.map((data: userPokemonsType) => {
             return (
               <div key={data.id} className="pokemon-card">
                 <div className="pokemon-card-list">
@@ -36,7 +37,7 @@ function PokemonCardGrid({ pokemons }: any) {
                       className="trash"
                       onClick={async () => {
                         await dispatch(
-                          removePokemonFromUserList({ id: data.firebaseId })
+                          removePokemonFromUserList({ id: data.firebaseId! })
                         );
                         dispatch(setToast("Pokemon Removed Successfully."));
                       }}
@@ -68,23 +69,24 @@ function PokemonCardGrid({ pokemons }: any) {
                   }}
                 />
                 <div className="pokemon-card-types">
-                  {data.types.map((type: any, index: number) => {
-                    const keys = Object.keys(type);
-
-                    return (
-                      <div className="pokemon-card-types-type" key={index}>
-                        <img
-                          src={type[keys[0]].image}
-                          alt="pokemon type"
-                          className="pokemon-card-types-type-image"
-                          loading="lazy"
-                        />
-                        <h6 className="pokemon-card-types-type-text">
-                          {keys[0]}
-                        </h6>
-                      </div>
-                    );
-                  })}
+                  {data.types.map(
+                    (type: pokemonTypeInterface, index: number) => {
+                      const keys = Object.keys(type);
+                      return (
+                        <div className="pokemon-card-types-type" key={index}>
+                          <img
+                            src={type[keys[0]].image}
+                            alt="pokemon type"
+                            className="pokemon-card-types-type-image"
+                            loading="lazy"
+                          />
+                          <h6 className="pokemon-card-types-type-text">
+                            {keys[0]}
+                          </h6>
+                        </div>
+                      );
+                    }
+                  )}
                 </div>
               </div>
             );

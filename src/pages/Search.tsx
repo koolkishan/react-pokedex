@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Wrapper from "../sections/Wrapper";
 import { debounce } from "../utils";
 import { useAppDispatch, useAppSelector } from "../app/hooks";

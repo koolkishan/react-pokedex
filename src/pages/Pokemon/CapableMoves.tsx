@@ -9,7 +9,7 @@ function CapableMoves() {
     <div className="page capable-moves">
       <h1 className="capable-moves-title">Abilities</h1>
       <ul className="capable-moves-list ability">
-        {pokemonData.pokemonAbilities.abilities.map((ability: string) => (
+        {pokemonData?.pokemonAbilities.abilities.map((ability: string) => (
           <li className="move" key={ability}>
             {ability}
           </li>
@@ -17,7 +17,7 @@ function CapableMoves() {
       </ul>
       <h1 className="capable-moves-title">Moves</h1>
       <ul className="capable-moves-list">
-        {pokemonData.pokemonAbilities.moves.map((ability: string) => (
+        {pokemonData?.pokemonAbilities.moves.map((ability: string) => (
           <li className="move" key={ability}>
             {ability}
           </li>

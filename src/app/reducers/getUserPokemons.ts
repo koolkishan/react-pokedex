@@ -2,19 +2,25 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getDocs, query, where } from "firebase/firestore";
 import { pokemonListRef } from "../../utils/firebaseConfig";
 import { defaultImages, images, pokemonTypes } from "../../utils";
+import { RootState } from "../store";
+import { userPokemonsType } from "../../utils/types";
 export const getUserPokemons = createAsyncThunk(
   "pokemon/userList",
-  async (args, { getState }: any) => {
+  async (args, { getState }) => {
     try {
       const {
-        app: {
-          userInfo: { email },
-        },
-      }: any = getState();
-      const firestoreQuery = query(pokemonListRef, where("email", "==", email));
+        app: { userInfo },
+      } = getState() as RootState;
+      if (!userInfo?.email) {
+        return;
+      }
+      const firestoreQuery = query(
+        pokemonListRef,
+        where("email", "==", userInfo?.email)
+      );
       const fetchedPokemons = await getDocs(firestoreQuery);
       if (fetchedPokemons.docs.length) {
-        const userPokemons: any = [];
+        const userPokemons: userPokemonsType[] = [];
         fetchedPokemons.forEach(async (pokemon) => {
           const pokemons = await pokemon.data().pokemon;
           // @ts-ignore

@@ -3,8 +3,12 @@ import { getInitialPokemonData } from "../reducers/getInitialPokemonData";
 import { getPokemonsData } from "../reducers/getPokemonsData";
 import { getUserPokemons } from "../reducers/getUserPokemons";
 import { removePokemonFromUserList } from "../reducers/removePokemonFromUserList";
+import {
+  PokemonInitialStateType,
+  generatedPokemonType,
+} from "../../utils/types";
 
-const initialState: any = {
+const initialState: PokemonInitialStateType = {
   allPokemon: undefined,
   randomPokemons: undefined,
   compareQueue: [],
@@ -18,7 +22,7 @@ export const PokemonSlice = createSlice({
   reducers: {
     addToCompare: (state, action) => {
       const index = state.compareQueue.findIndex(
-        (pokemon: any) => pokemon.id === action.payload.id
+        (pokemon: generatedPokemonType) => pokemon.id === action.payload.id
       );
       if (index === -1) {
         if (state.compareQueue.length === 2) {
@@ -29,7 +33,7 @@ export const PokemonSlice = createSlice({
     },
     removeFromCompare: (state, action) => {
       const index = state.compareQueue.findIndex(
-        (pokemon: any) => pokemon.id === action.payload.id
+        (pokemon: generatedPokemonType) => pokemon.id === action.payload.id
       );
       const queue = [...state.compareQueue];
       queue.splice(index, 1);
@@ -51,7 +55,7 @@ export const PokemonSlice = createSlice({
       state.randomPokemons = action.payload;
     });
     builder.addCase(getUserPokemons.fulfilled, (state, action) => {
-      state.userPokemons = action.payload;
+      state.userPokemons = action.payload!;
     });
     builder.addCase(removePokemonFromUserList.fulfilled, (state, action) => {
       const userPokemons = [...state.userPokemons];

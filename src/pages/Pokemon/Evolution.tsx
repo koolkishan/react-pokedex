@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import PokemonCardGrid from "../../components/PokemonCardGrid";
 import { getPokemonsData } from "../../app/reducers/getPokemonsData";
 import Loader from "../../components/Loader";
+import { genericPokemonType } from "../../utils/types";
 
 function Evolution() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -10,10 +11,10 @@ function Evolution() {
   const pokemonData = useAppSelector(({ pokemon }) => pokemon);
   useEffect(() => {
     const fetchData = async () => {
-      const pokemons = pokemonData.currentPokemon.evolution.map(
-        ({ pokemon }: any) => pokemon
-      );
-
+      const pokemons: genericPokemonType[] =
+        pokemonData.currentPokemon!.evolution.map(
+          ({ pokemon }: { pokemon: genericPokemonType }) => pokemon
+        );
       await dispatch(getPokemonsData(pokemons));
       setIsLoaded(true);
     };
@@ -23,7 +24,7 @@ function Evolution() {
   return (
     <div className="page">
       {isLoaded ? (
-        <PokemonCardGrid pokemons={pokemonData.randomPokemons} />
+        <PokemonCardGrid pokemons={pokemonData.randomPokemons!} />
       ) : (
         <Loader />
       )}

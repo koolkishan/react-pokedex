@@ -14,7 +14,7 @@ export default function Navbar() {
     ul(index);
   }, [location.pathname]);
   function ul(index: number) {
-    var underlines: any = document.querySelectorAll(".underline");
+    var underlines = document.querySelectorAll<HTMLElement>(".underline");
     for (var i = 0; i < underlines.length; i++) {
       underlines[i].style.transform = "translate3d(" + index * 100 + "%,0,0)";
     }

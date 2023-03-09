@@ -4,7 +4,7 @@ import { pokemonListRef } from "../../utils/firebaseConfig";
 
 export const removePokemonFromUserList = createAsyncThunk(
   "pokemon/remove",
-  async ({ id }: any) => {
+  async ({ id }: { id: string }) => {
     try {
       await deleteDoc(doc(pokemonListRef, id));
       return { id };
