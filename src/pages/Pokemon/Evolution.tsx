@@ -19,7 +19,7 @@ function Evolution() {
       setIsLoaded(true);
     };
     fetchData();
-  }, [dispatch]);
+  }, [dispatch, pokemonData.currentPokemon]);
 
   return (
     <div className="page">

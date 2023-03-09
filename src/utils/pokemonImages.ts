@@ -6,7 +6,7 @@ const fetchImages = (context: string) => {
     r.keys().forEach((key) => (cache[key] = r(key)));
   }
   importAll(context);
-  Object.entries(cache).map((module: string[]) => {
+  Object.entries(cache).forEach((module: string[]) => {
     let key = module[0].split("");
     key.splice(0, 2);
     key.splice(-4, 4);

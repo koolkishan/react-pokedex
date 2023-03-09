@@ -5,20 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import { resetRandomPokemons } from "../app/slices/PokemonSlice";
 import { useAppDispatch } from "../app/hooks";
 export default function Navbar() {
-  const location = useLocation();
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    const index = navigationRoutes.findIndex(({ route }) =>
-      location.pathname.includes(route)
-    );
-    ul(index);
-  }, [location.pathname]);
-  function ul(index: number) {
-    var underlines = document.querySelectorAll<HTMLElement>(".underline");
-    for (var i = 0; i < underlines.length; i++) {
-      underlines[i].style.transform = "translate3d(" + index * 100 + "%,0,0)";
-    }
-  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const navigationRoutes = [
     {
       name: "Search",
@@ -41,6 +28,20 @@ export default function Navbar() {
       route: "/about",
     },
   ];
+  const location = useLocation();
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    const index = navigationRoutes.findIndex(({ route }) =>
+      location.pathname.includes(route)
+    );
+    ul(index);
+  }, [location.pathname, navigationRoutes]);
+  function ul(index: number) {
+    var underlines = document.querySelectorAll<HTMLElement>(".underline");
+    for (var i = 0; i < underlines.length; i++) {
+      underlines[i].style.transform = "translate3d(" + index * 100 + "%,0,0)";
+    }
+  }
 
   return (
     <nav>
