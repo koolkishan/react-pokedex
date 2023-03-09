@@ -11,7 +11,7 @@ function MyList() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getUserPokemons());
-  }, [userInfo]);
+  }, [userInfo, dispatch]);
   return (
     <div className="list">
       {userInfo ? <PokemonCardGrid pokemons={userPokemons} /> : <Login />}
